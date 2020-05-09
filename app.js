@@ -1,8 +1,8 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
+const bodyParser = require('body-parser');
 const { PORT, DATABASE_URL } = require('./config.js');
-const path = require('path');
+
 const usersrouter = require('./routes/user');
 
 const cardsrouter = require('./routes/cards');
@@ -17,7 +17,7 @@ mongoose.connect(DATABASE_URL, {
   useUnifiedTopology: true,
 });
 
-const bodyParser = require('body-parser');
+
 app.use((req, res, next) => {
   req.user = {
     _id: '5eb683f8254a5b1b7da92ad8',
