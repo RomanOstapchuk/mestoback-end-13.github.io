@@ -1,33 +1,8 @@
-const router = require('express').Router();
-const path = require('path');
-const fs = require('fs');
+const userRouter = require('express').Router();
+const { getUsers, findUser, createUser } = require('../controllers/users');
 
-/* eslint no-underscore-dangle: 0 */
-const dirusers = path.join(__dirname, '../data/user.json');
-const users = require('../data/user');
+userRouter.get('/', getUsers);
+userRouter.get('/:id', findUser);
+userRouter.post('/', createUser);
 
-router.get('/users/:id', (req, res) => {
-  fs.readFile(dirusers, { encoding: 'utf8' }, (err) => {
-    if (err) {
-      res.status(500).send({ message: 'Users is not found' });
-      return;
-    }
-    if (!users.find((item) => item._id === req.params.id)) {
-      res.status(404).send({ message: 'Нет пользователя с таким id' });
-    } else {
-      res.send(users.find((item) => item._id === req.params.id));
-    }
-  });
-});
-
-router.get('/users', (req, res) => {
-  fs.readFile(dirusers, { encoding: 'utf8' }, (err) => {
-    if (err) {
-      res.status(500).send({ message: 'Users is not found' });
-      return;
-    }
-    res.send(users);
-  });
-});
-
-module.exports = router;
+module.exports = userRouter;
